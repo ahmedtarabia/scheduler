@@ -10,7 +10,7 @@ const interviewerClass = classNames("interviewers__item", {
 });
 
   return (
-    <li className={interviewerClass} onClick={props.setInterviewer}>
+    <li className={interviewerClass} onClick={setInterviewer}>
       <img
         className="interviewers__item-image"
         src={avatar}
