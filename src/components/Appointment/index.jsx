@@ -1,4 +1,7 @@
 import React from "react";
+import Header from "./Header.jsx";
+import Show from "./Show.jsx";
+import Empty from "./Empty.jsx";
 
 import "components/Appointment/styles.scss"
 
