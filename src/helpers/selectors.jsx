@@ -26,3 +26,15 @@ export function getInterview(state, interview) {
   //If interview does not exist, return null
   return null;
 }
+
+export function getInterviewersForDay(state, day) {
+  for (let i = 0; i < state.days.length; i++) {
+    if (state.days[i].name === day) {
+      return state.days[i].interviewers.map((interviewerid) => {
+        return state.interviewers[interviewerid];
+      });
+    }
+  }
+
+  return [];
+}
