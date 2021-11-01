@@ -3,6 +3,7 @@ import Header from "./Header.jsx";
 import Show from "./Show.jsx";
 import Empty from "./Empty.jsx";
 import Form from "./Form.jsx";
+import Status from "./Status.jsx";
 import useVisualMode from "../../hooks/useVisualMode.jsx";
 
 import "components/Appointment/styles.scss";
@@ -10,11 +11,24 @@ import "components/Appointment/styles.scss";
 const EMPTY = "EMPTY";
 const SHOW = "SHOW";
 const CREATE = "CREATE";
+const SAVING = "SAVING";
 
 export default function Appointment(props) {
   const { mode, transition, back } = useVisualMode(
     props.interview ? SHOW : EMPTY
   );
+
+  function save(name, interviewer) {
+    const interview = {
+      student: name,
+      interviewer,
+    };
+    transition(SAVING);
+    props
+      .bookInterview(props.id, interview)
+      .then(() => transition(SHOW))
+      .catch((err) => console.log(err));
+  }
 
   return (
     <Fragment>
@@ -26,8 +40,13 @@ export default function Appointment(props) {
           interviewer={props.interview.interviewer}
         />
       )}
+      {mode === SAVING && <Status message="Saving" />}
       {mode === CREATE && (
-        <Form interviewers={props.interviewers} onCancel={() => back()} />
+        <Form
+          interviewers={props.interviewers}
+          onSave={save}
+          onCancel={() => back()}
+        />
       )}
     </Fragment>
   );
