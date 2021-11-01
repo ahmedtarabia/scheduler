@@ -46,7 +46,7 @@ export default function Application() {
 
   function cancelInterview(id, interview) {
     return axios
-      .delete(`/api/appointments/${id}`, { interview })
+      .delete(`/api/appointments/${id}`)
       .then((response) => {
         const appointment = {
           ...state.appointments[id],
