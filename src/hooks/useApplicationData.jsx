@@ -10,7 +10,7 @@ export default function useApplicationData() {
   });
   const setDay = (day) => setState({ ...state, day });
 
-  function bookInterview(id, interview) {
+  function bookInterview(id, interview, isNew) {
     return new Promise((resolve, reject) => {
       axios
         .put(`/api/appointments/${id}`, { interview })
@@ -25,10 +25,16 @@ export default function useApplicationData() {
             ...state.appointments,
             [id]: appointment,
           };
+
+          const newSpots = isNew
+            ? updateSpots(id, -1, [...state.days])
+            : [...state.days];
+
           setState({
             ...state,
             appointments,
-            interview: response.data,
+            // days,
+            newSpots,
           });
           setTimeout(() => {
             resolve();
@@ -54,10 +60,12 @@ export default function useApplicationData() {
             ...state.appointments,
             [id]: appointment,
           };
+          const newSpots = updateSpots(id, 1, [...state.days]);
           setState({
             ...state,
             appointments,
             interview: null,
+            newSpots,
           });
           setTimeout(() => {
             resolve();
@@ -68,6 +76,16 @@ export default function useApplicationData() {
           reject();
         });
     });
+  }
+
+  function updateSpots(id, value, days) {
+    //loop through the days, find day that is updated then find num of appointments for that day which is new appointmnet object updated.  -> forEach... look for the nul and count them. -> double for loop...
+    days.forEach((day) => {
+      if (day.appointments.includes(id)) {
+        day.spots = parseInt(day.spots) + value;
+      }
+    });
+    return days;
   }
 
   useEffect(() => {

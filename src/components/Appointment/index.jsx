@@ -25,14 +25,15 @@ export default function Appointment(props) {
     props.interview && props.interview.interviewer ? SHOW : EMPTY
   );
 
-  function save(name, interviewer) {
+  function save(name, interviewer, isNew) {
     const interview = {
       student: name,
       interviewer: interviewer.id,
     };
+    console.log("THIS IS ISNEWWWW", isNew);
     transition(SAVING);
     props
-      .bookInterview(props.id, interview)
+      .bookInterview(props.id, interview, isNew)
       .then(() => transition(SHOW))
       .catch(() => transition(ERROR_SAVE, true));
   }
@@ -76,6 +77,7 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           onSave={save}
           onCancel={() => back()}
+          isNew={false}
         />
       )}
       {mode === DELETE && <Status message="Deleting" />}
@@ -90,6 +92,7 @@ export default function Appointment(props) {
           interviewers={props.interviewers}
           onSave={save}
           onCancel={() => back()}
+          isNew={true}
         />
       )}
     </Fragment>
