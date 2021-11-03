@@ -20,6 +20,10 @@ The user can delete existing appointments by clicking on the trash icon. The use
 
 ## ![Delete existing appointment](./docs/deleteInterview.gif)
 
+If the name of interviewer is not entered, the user will be asked to enter the name. If the user cannot book an appointment or delete an appointment, an error will be shown to the user as can be seen below:
+
+## ![Error handling](./docs/errorHandling.gif)
+
 ## Setup
 
 Install dependencies with `npm install`.
