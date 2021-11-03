@@ -4,6 +4,8 @@ A React application that allows the user to add, edit and delete interview appoi
 
 ## Final Product
 
+### To Browse through the appointments in different days
+
 The user can view all the appointments on the weekdays as shown below:
 
 ## ![Browse appointment](./docs/switchInterview.gif)
