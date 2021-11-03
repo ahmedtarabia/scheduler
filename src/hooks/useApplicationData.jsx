@@ -2,14 +2,17 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 
 export default function useApplicationData() {
+  //state defined and exported to Application.js
   const [state, setState] = useState({
     day: "Monday",
     days: [],
     appointments: {},
     interviewers: {},
   });
+  // Make day the current day
   const setDay = (day) => setState({ ...state, day });
 
+  //Book an appointment
   function bookInterview(id, interview, isNew) {
     return new Promise((resolve, reject) => {
       axios
@@ -25,11 +28,11 @@ export default function useApplicationData() {
             ...state.appointments,
             [id]: appointment,
           };
-
+          //To update newSpots by -1 when an interview is booked
           const newSpots = isNew
             ? updateSpots(id, -1, [...state.days])
             : [...state.days];
-
+          //set new state when interview is booked.
           setState({
             ...state,
             appointments,
@@ -47,6 +50,7 @@ export default function useApplicationData() {
     });
   }
 
+  //Cancel existing appointments
   function cancelInterview(id, interview) {
     return new Promise((resolve, reject) => {
       axios
@@ -60,7 +64,9 @@ export default function useApplicationData() {
             ...state.appointments,
             [id]: appointment,
           };
+          //To update newSpots by +1 when an interview is cancelled.
           const newSpots = updateSpots(id, 1, [...state.days]);
+          //set new state when interview is cancelled.
           setState({
             ...state,
             appointments,
@@ -79,7 +85,7 @@ export default function useApplicationData() {
   }
 
   function updateSpots(id, value, days) {
-    //loop through the days, find day that is updated then find num of appointments for that day which is new appointmnet object updated.  -> forEach... look for the nul and count them. -> double for loop...
+    //loop through the days, find day that is updated then find num of appointments for that day which is new appointmnet object updated.
     days.forEach((day) => {
       if (day.appointments.includes(id)) {
         day.spots = parseInt(day.spots) + value;
@@ -88,6 +94,7 @@ export default function useApplicationData() {
     return days;
   }
 
+  //Make axios calls to server to fetch data
   useEffect(() => {
     Promise.all([
       axios.get("/api/days"),

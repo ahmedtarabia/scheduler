@@ -1,4 +1,5 @@
 import React, { Fragment } from "react";
+//Define views for app
 import Show from "./Show.jsx";
 import Empty from "./Empty.jsx";
 import Form from "./Form.jsx";
@@ -20,10 +21,12 @@ const ERROR_SAVE = "ERROR_SAVE";
 const ERROR_DELETE = "ERROR_DELETE";
 
 export default function Appointment(props) {
+  //update mode depending on whether an interview exists or not.
   const { mode, transition, back } = useVisualMode(
     props.interview && props.interview.interviewer ? SHOW : EMPTY
   );
 
+  //Save new appointment
   function save(name, interviewer, isNew) {
     const interview = {
       student: name,
@@ -37,6 +40,7 @@ export default function Appointment(props) {
       .catch(() => transition(ERROR_SAVE, true));
   }
 
+  //delete existing appointment
   function deleteInterview() {
     transition(DELETE, true);
     props
@@ -45,15 +49,18 @@ export default function Appointment(props) {
       .catch(() => transition(ERROR_DELETE, true));
   }
 
+  //confirm transition
   function confirm() {
     transition(CONFIRM);
   }
 
+  //edit transition
   function edit() {
     transition(EDIT);
   }
 
   return (
+    //switch between different views depending on action taken
     <Fragment>
       <header>{props.time}</header>
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
