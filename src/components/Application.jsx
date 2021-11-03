@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import useApplicationData from "hooks/useApplicationData";
-import axios from "axios";
 import DayList from "./DayList";
 import Appointment from "./Appointment";
 import {
@@ -10,7 +9,6 @@ import {
 } from "helpers/selectors";
 
 import "components/Application.scss";
-import { resolvePreset } from "@babel/core";
 
 export default function Application() {
   const { state, setDay, bookInterview, cancelInterview } =
