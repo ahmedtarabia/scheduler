@@ -1,42 +1,35 @@
-version: 2
+---
 jobs:
   build:
     docker:
-      - image: circleci/node:10.16
-
-    working_directory: ~/client
-
+      - image: "circleci/node:10.16"
     steps:
       - checkout
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "package.json" }}
+            - 'v1-dependencies-{{ checksum "package.json" }}'
             - v1-dependencies-
-      - run: npm install
+      - run: "npm install"
       - save_cache:
+          key: 'v1-dependencies-{{ checksum "package.json" }}'
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
-      - run: npm test
-
-      deploy:
-  machine:
-    enabled: true
-
-  working_directory: ~/client
-
-  steps:
-    - add_ssh_keys:
-        fingerprints:
-          - "49:06:01:c4:bd:44:6c:a3:aa:b7:e8:f2:56:9a:29:52"
-    - checkout
-    - run:
-        name: Push Master to Production
-        command: |
-          git push https://github.com/ahmedtarabia/scheduler.git master:production
-
+      - run: "npm test"
+    working_directory: ~/client
+  deploy:
+    machine:
+      enabled: true
+    steps:
+      - add_ssh_keys:
+          fingerprints:
+            - "49:06:01:c4:bd:44:6c:a3:aa:b7:e8:f2:56:9a:29:52"
+      - checkout
+      - run:
+          command: "git push https://github.com/ahmedtarabia/scheduler.git master:production\n"
+          name: "Push Master to Production"
+    working_directory: ~/client
+version: 2
 workflows:
-  version: 2
   test_and_deploy:
     jobs:
       - build:
@@ -49,3 +42,4 @@ workflows:
               ignore: production
           requires:
             - build
+  version: 2
