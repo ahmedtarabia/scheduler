@@ -22,7 +22,7 @@ jobs:
     steps:
       - add_ssh_keys:
           fingerprints:
-            - "49:06:01:c4:bd:44:6c:a3:aa:b7:e8:f2:56:9a:29:52"
+            - "f1:56:b2:6e:b9:ec:4a:b4:86:d3:36:1a:2e:0b:c8:8e"
       - checkout
       - run:
           command: "git push https://github.com/ahmedtarabia/scheduler.git master:production\n"
