@@ -18,8 +18,6 @@ export default function useApplicationData() {
       axios
         .put(`/api/appointments/${id}`, { interview })
         .then((response) => {
-          console.log(response);
-
           const appointment = {
             ...state.appointments[id],
             interview: { ...interview },
@@ -44,7 +42,6 @@ export default function useApplicationData() {
           }, 50);
         })
         .catch((err) => {
-          console.log(err);
           reject();
         });
     });
@@ -78,7 +75,6 @@ export default function useApplicationData() {
           }, 50);
         })
         .catch((err) => {
-          console.log(err);
           reject();
         });
     });
@@ -101,7 +97,6 @@ export default function useApplicationData() {
       axios.get("/api/appointments"),
       axios.get("/api/interviewers"),
     ]).then((all) => {
-      console.log(all);
       setState((prev) => ({
         ...prev,
         days: all[0].data,

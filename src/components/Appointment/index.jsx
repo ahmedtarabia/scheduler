@@ -32,7 +32,6 @@ export default function Appointment(props) {
       student: name,
       interviewer: interviewer.id,
     };
-    console.log("THIS IS ISNEWWWW", isNew);
     transition(SAVING);
     props
       .bookInterview(props.id, interview, isNew)
